@@ -1,0 +1,18 @@
+# git ignore file
+# packages folder
+packages/*
+
+#bin folder
+*/bin/*
+#obj folder
+*/obj/*
+
+#ncrunch files
+*.ncrunchproject
+*.ncrunchsolution*
+*.crunchsolution*
+
+#solution settings file
+*.suo
+#project settings file
+*.user
