@@ -7,6 +7,11 @@ namespace UpshotHelper
 {
     internal static class TypeDescriptorExtensions
     {
+        /// <summary>
+        /// Explicits the attributes.
+        /// </summary>
+        /// <param name="propertyDescriptor">The property descriptor.</param>
+        /// <returns></returns>
         public static AttributeCollection ExplicitAttributes(this PropertyDescriptor propertyDescriptor)
         {
             List<Attribute> list = new List<Attribute>(propertyDescriptor.Attributes.Cast<Attribute>());
@@ -29,6 +34,11 @@ namespace UpshotHelper
             }
             return new AttributeCollection(list.ToArray());
         }
+        /// <summary>
+        /// Attributeses the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public static AttributeCollection Attributes(this Type type)
         {
             AttributeCollection attributes = TypeDescriptor.GetAttributes(type.BaseType);
@@ -50,6 +60,14 @@ namespace UpshotHelper
             }
             return new AttributeCollection(list.ToArray());
         }
+        /// <summary>
+        /// Determines whether [contains attribute type] [the specified attributes].
+        /// </summary>
+        /// <typeparam name="TAttribute">The type of the attribute.</typeparam>
+        /// <param name="attributes">The attributes.</param>
+        /// <returns>
+        ///   <c>true</c> if [contains attribute type] [the specified attributes]; otherwise, <c>false</c>.
+        /// </returns>
         public static bool ContainsAttributeType<TAttribute>(this AttributeCollection attributes) where TAttribute : Attribute
         {
             return attributes.Cast<Attribute>().Any((Attribute a) => a.GetType() == typeof(TAttribute));

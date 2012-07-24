@@ -8,9 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Http;
-using System.Web.Http.Controllers;
 using System.Web.Mvc;
-using Newtonsoft.Json;
 
 namespace UpshotHelper
 {
@@ -18,12 +16,52 @@ namespace UpshotHelper
     {
         private interface IDataSourceConfig
         {
+            /// <summary>
+            /// Gets the name of the client.
+            /// </summary>
+            /// <value>
+            /// The name of the client.
+            /// </value>
             string ClientName { get; }
+            /// <summary>
+            /// Gets the type of the controller.
+            /// </summary>
+            /// <value>
+            /// The type of the controller.
+            /// </value>
             Type ControllerType { get; }
+            /// <summary>
+            /// Gets the shared context expression.
+            /// </summary>
+            /// <value>
+            /// The shared context expression.
+            /// </value>
             string SharedContextExpression { get; }
+            /// <summary>
+            /// Sets the context expression.
+            /// </summary>
+            /// <value>
+            /// The context expression.
+            /// </value>
             string ContextExpression { set; }
+            /// <summary>
+            /// Sets the client mapping json.
+            /// </summary>
+            /// <value>
+            /// The client mapping json.
+            /// </value>
             string ClientMappingJson { set; }
+            /// <summary>
+            /// Gets the type of the entity.
+            /// </summary>
+            /// <value>
+            /// The type of the entity.
+            /// </value>
             Type EntityType { get; }
+            /// <summary>
+            /// Gets the initialization script.
+            /// </summary>
+            /// <returns>Returns the Upshot Data Source initialization JavaScript</returns>
             string GetInitializationScript();
         }
 
@@ -35,18 +73,62 @@ namespace UpshotHelper
             private readonly string serviceUrlOverride;
             private readonly string clientName;
             private readonly Type entityType;
+
+            /// <summary>
+            /// Gets the name of the client.
+            /// </summary>
+            /// <value>
+            /// The name of the client.
+            /// </value>
             public string ClientName { get { return this.clientName; } }
 
+            /// <summary>
+            /// Gets the type of the controller.
+            /// </summary>
+            /// <value>
+            /// The type of the controller.
+            /// </value>
             public Type ControllerType { get { return typeof(TApiController); } }
 
+            /// <summary>
+            /// Gets the shared context expression.
+            /// </summary>
+            /// <value>
+            /// The shared context expression.
+            /// </value>
             public string SharedContextExpression { get { return this.ClientExpression + ".getDataContext()"; } }
 
+            /// <summary>
+            /// Gets or sets the context expression.
+            /// </summary>
+            /// <value>
+            /// The context expression.
+            /// </value>
             public string ContextExpression { private get; set; }
 
+            /// <summary>
+            /// Gets or sets the client mapping json.
+            /// </summary>
+            /// <value>
+            /// The client mapping json.
+            /// </value>
             public string ClientMappingJson { private get; set; }
 
+            /// <summary>
+            /// Gets the client expression.
+            /// </summary>
+            /// <value>
+            /// The client expression.
+            /// </value>
             private string ClientExpression { get { return "upshot.dataSources." + this.ClientName; } }
 
+            /// <summary>
+            /// Gets the type of the entity.
+            /// </summary>
+            /// <value>
+            /// The type of the entity.
+            /// </value>
+            /// <exception cref="System.ArgumentException"></exception>
             public Type EntityType
             {
                 get
@@ -74,6 +156,13 @@ namespace UpshotHelper
                 }
             }
 
+            /// <summary>
+            /// Gets the service URL.
+            /// </summary>
+            /// <value>
+            /// The service URL.
+            /// </value>
+            /// <exception cref="System.ArgumentException"></exception>
             private string ServiceUrl
             {
                 get
@@ -98,6 +187,12 @@ namespace UpshotHelper
                 }
             }
 
+            /// <summary>
+            /// Gets the default name of the client.
+            /// </summary>
+            /// <value>
+            /// The default name of the client.
+            /// </value>
             private string DefaultClientName
             {
                 get
@@ -111,6 +206,13 @@ namespace UpshotHelper
                 }
             }
 
+            /// <summary>
+            /// Gets the operation method.
+            /// </summary>
+            /// <value>
+            /// The operation method.
+            /// </value>
+            /// <exception cref="System.ArgumentException"></exception>
             private MethodInfo OperationMethod
             {
                 get
@@ -140,6 +242,15 @@ namespace UpshotHelper
                 }
             }
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DataSourceConfig" /> class.
+            /// </summary>
+            /// <param name="htmlHelper">The HTML helper.</param>
+            /// <param name="bufferChanges">if set to <c>true</c> [buffer changes].</param>
+            /// <param name="queryOperation">The query operation.</param>
+            /// <param name="entityType">Type of the entity.</param>
+            /// <param name="serviceUrlOverride">The service URL override.</param>
+            /// <param name="clientName">Name of the client.</param>
             public DataSourceConfig(HtmlHelper htmlHelper, bool bufferChanges, Expression<Func<TApiController, object>> queryOperation, Type entityType, string serviceUrlOverride, string clientName)
             {
                 this.htmlHelper = htmlHelper;
@@ -150,6 +261,12 @@ namespace UpshotHelper
                 this.clientName = (string.IsNullOrEmpty(clientName) ? this.DefaultClientName : clientName);
             }
 
+            /// <summary>
+            /// Gets the initialization script.
+            /// </summary>
+            /// <returns>
+            /// Returns the Upshot Data Source initialization JavaScript
+            /// </returns>
             public string GetInitializationScript()
             {
                 return string.Format(CultureInfo.InvariantCulture, "{0} = upshot.RemoteDataSource({{\r\n    providerParameters: {{ url: \"{1}\", operationName: \"{2}\" }},\r\n    entityType: \"{3}\",\r\n    bufferChanges: {4},\r\n    dataContext: {5},\r\n    mapping: {6}\r\n}});", new object[] 
@@ -170,6 +287,11 @@ namespace UpshotHelper
         private readonly IDictionary<string, UpshotConfigBuilder.IDataSourceConfig> dataSources;
         private readonly IDictionary<Type, string> clientMappings;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpshotConfigBuilder" /> class.
+        /// </summary>
+        /// <param name="htmlHelper">The HTML helper.</param>
+        /// <param name="bufferChanges">if set to <c>true</c> [buffer changes].</param>
         public UpshotConfigBuilder(HtmlHelper htmlHelper, bool bufferChanges)
         {
             this.htmlHelper = htmlHelper;
@@ -178,12 +300,29 @@ namespace UpshotHelper
             this.clientMappings = new Dictionary<Type, string>();
         }
 
+        /// <summary>
+        /// Datas the source.
+        /// </summary>
+        /// <typeparam name="TApiController">The type of the API controller.</typeparam>
+        /// <param name="queryOperation">The query operation.</param>
+        /// <param name="entityType">Type of the entity.</param>
+        /// <returns>Returns an instance of <seealso cref="UpshotConfigBuilder"/> configured for a DataSource.</returns>
         [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Following established design pattern for HTML helpers.")]
         public UpshotConfigBuilder DataSource<TApiController>(Expression<Func<TApiController, object>> queryOperation, Type entityType) where TApiController : ApiController
         {
             return this.DataSource<TApiController>(queryOperation, entityType, null, null);
         }
 
+        /// <summary>
+        /// Datas the source.
+        /// </summary>
+        /// <typeparam name="TApiController">The type of the API controller.</typeparam>
+        /// <param name="queryOperation">The query operation.</param>
+        /// <param name="entityType">Type of the entity.</param>
+        /// <param name="serviceUrl">The service URL.</param>
+        /// <param name="clientName">Name of the client.</param>
+        /// <returns>Returns an instance of <seealso cref="UpshotConfigBuilder"/> configured for a DataSource.</returns>
+        /// <exception cref="System.ArgumentException"></exception>
         [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#", Justification = "Following established design pattern for HTML helpers."), SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Following established design pattern for HTML helpers.")]
         public UpshotConfigBuilder DataSource<TApiController>(Expression<Func<TApiController, object>> queryOperation, Type entityType, string serviceUrl, string clientName) where TApiController : ApiController
         {
@@ -200,6 +339,13 @@ namespace UpshotHelper
             return this;
         }
 
+        /// <summary>
+        /// Clients the mapping.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="clientConstructor">The client constructor.</param>
+        /// <returns>Returns an instance of <seealso cref="UpshotConfigBuilder"/> configured for ClientMapping.</returns>
+        /// <exception cref="System.ArgumentException"></exception>
         [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Following established design pattern for HTML helpers.")]
         public UpshotConfigBuilder ClientMapping<TEntity>(string clientConstructor)
         {
@@ -218,6 +364,12 @@ namespace UpshotHelper
             return this;
         }
 
+        /// <summary>
+        /// Returns an HTML-encoded string.
+        /// </summary>
+        /// <returns>
+        /// An HTML-encoded string.
+        /// </returns>
         public string ToHtmlString()
         {
             StringBuilder stringBuilder = new StringBuilder("upshot.dataSources = upshot.dataSources || {};\n");
@@ -253,6 +405,11 @@ namespace UpshotHelper
 			});
         }
 
+        /// <summary>
+        /// Gets the metadata.
+        /// </summary>
+        /// <param name="entityType">Type of the entity.</param>
+        /// <returns></returns>
         private string GetMetadata(Type entityType)
         {
             MethodInfo method = typeof(MetadataExtensions).GetMethod("Metadata");
@@ -266,6 +423,10 @@ namespace UpshotHelper
             return htmlString.ToHtmlString(); 
         }
 
+        /// <summary>
+        /// Gets the client mappings object literal.
+        /// </summary>
+        /// <returns>Returns a formatted string for the Client Mapping object.</returns>
         private string GetClientMappingsObjectLiteral()
         {
             IEnumerable<string> values =
@@ -281,6 +442,11 @@ namespace UpshotHelper
 			});
         }
 
+        /// <summary>
+        /// Encodes the name of the server type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>Returns a string that Upshot will recognize for the given <paramref name="type"/>.</returns>
         private static string EncodeServerTypeName(Type type)
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", new object[]

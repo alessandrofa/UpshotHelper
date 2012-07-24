@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace UpshotHelper
@@ -18,16 +14,34 @@ namespace UpshotHelper
         {
             private List<string> key = new List<string>();
             private List<MetadataGenerator.TypePropertyMetadata> properties = new List<MetadataGenerator.TypePropertyMetadata>();
+            /// <summary>
+            /// Gets the name of the type.
+            /// </summary>
+            /// <value>
+            /// The name of the type.
+            /// </value>
             public string TypeName
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the type namespace.
+            /// </summary>
+            /// <value>
+            /// The type namespace.
+            /// </value>
             public string TypeNamespace
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the name of the encoded type.
+            /// </summary>
+            /// <value>
+            /// The name of the encoded type.
+            /// </value>
             public string EncodedTypeName
             {
                 get
@@ -35,6 +49,12 @@ namespace UpshotHelper
                     return MetadataGenerator.EncodeTypeName(this.TypeName, this.TypeNamespace);
                 }
             }
+            /// <summary>
+            /// Gets the key.
+            /// </summary>
+            /// <value>
+            /// The key.
+            /// </value>
             public IEnumerable<string> Key
             {
                 get
@@ -42,6 +62,12 @@ namespace UpshotHelper
                     return this.key;
                 }
             }
+            /// <summary>
+            /// Gets the properties.
+            /// </summary>
+            /// <value>
+            /// The properties.
+            /// </value>
             public IEnumerable<MetadataGenerator.TypePropertyMetadata> Properties
             {
                 get
@@ -49,6 +75,10 @@ namespace UpshotHelper
                     return this.properties;
                 }
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypeMetadata" /> class.
+            /// </summary>
+            /// <param name="entityType">Type of the entity.</param>
             public TypeMetadata(Type entityType)
             {
                 Type elementType = TypeUtility.GetElementType(entityType);
@@ -68,6 +98,10 @@ namespace UpshotHelper
                     }
                 }
             }
+            /// <summary>
+            /// To the json value.
+            /// </summary>
+            /// <returns></returns>
             public JToken ToJsonValue()
             {
                 JObject jsonObject = new JObject();
@@ -115,36 +149,78 @@ namespace UpshotHelper
         public class TypePropertyMetadata
         {
             private List<MetadataGenerator.TypePropertyValidationRuleMetadata> validationRules = new List<MetadataGenerator.TypePropertyValidationRuleMetadata>();
+            /// <summary>
+            /// Gets the name.
+            /// </summary>
+            /// <value>
+            /// The name.
+            /// </value>
             public string Name
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the name of the type.
+            /// </summary>
+            /// <value>
+            /// The name of the type.
+            /// </value>
             public string TypeName
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the type namespace.
+            /// </summary>
+            /// <value>
+            /// The type namespace.
+            /// </value>
             public string TypeNamespace
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets a value indicating whether this instance is read only.
+            /// </summary>
+            /// <value>
+            /// <c>true</c> if this instance is read only; otherwise, <c>false</c>.
+            /// </value>
             public bool IsReadOnly
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets a value indicating whether this instance is array.
+            /// </summary>
+            /// <value>
+            ///   <c>true</c> if this instance is array; otherwise, <c>false</c>.
+            /// </value>
             public bool IsArray
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the association.
+            /// </summary>
+            /// <value>
+            /// The association.
+            /// </value>
             public MetadataGenerator.TypePropertyAssociationMetadata Association
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the validation rules.
+            /// </summary>
+            /// <value>
+            /// The validation rules.
+            /// </value>
             public IList<MetadataGenerator.TypePropertyValidationRuleMetadata> ValidationRules
             {
                 get
@@ -152,6 +228,10 @@ namespace UpshotHelper
                     return this.validationRules;
                 }
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyMetadata" /> class.
+            /// </summary>
+            /// <param name="descriptor">The descriptor.</param>
             public TypePropertyMetadata(PropertyDescriptor descriptor)
             {
                 this.Name = descriptor.Name;
@@ -193,6 +273,10 @@ namespace UpshotHelper
                     this.validationRules.Add(new MetadataGenerator.TypePropertyValidationRuleMetadata(dataTypeAttribute));
                 }
             }
+            /// <summary>
+            /// To the json value.
+            /// </summary>
+            /// <returns></returns>
             public JToken ToJsonValue()
             {
                 JObject jsonObject = new JObject();
@@ -216,16 +300,34 @@ namespace UpshotHelper
         {
             private List<string> thisKeyMembers = new List<string>();
             private List<string> otherKeyMembers = new List<string>();
+            /// <summary>
+            /// Gets the name.
+            /// </summary>
+            /// <value>
+            /// The name.
+            /// </value>
             public string Name
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets a value indicating whether this instance is foreign key.
+            /// </summary>
+            /// <value>
+            /// <c>true</c> if this instance is foreign key; otherwise, <c>false</c>.
+            /// </value>
             public bool IsForeignKey
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the this key members.
+            /// </summary>
+            /// <value>
+            /// The this key members.
+            /// </value>
             public IEnumerable<string> ThisKeyMembers
             {
                 get
@@ -233,6 +335,12 @@ namespace UpshotHelper
                     return this.thisKeyMembers;
                 }
             }
+            /// <summary>
+            /// Gets the other key members.
+            /// </summary>
+            /// <value>
+            /// The other key members.
+            /// </value>
             public IEnumerable<string> OtherKeyMembers
             {
                 get
@@ -240,6 +348,10 @@ namespace UpshotHelper
                     return this.otherKeyMembers;
                 }
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyAssociationMetadata" /> class.
+            /// </summary>
+            /// <param name="associationAttr">The association attr.</param>
             public TypePropertyAssociationMetadata(AssociationAttribute associationAttr)
             {
                 this.Name = associationAttr.Name;
@@ -247,6 +359,10 @@ namespace UpshotHelper
                 this.otherKeyMembers = associationAttr.OtherKeyMembers.ToList<string>();
                 this.thisKeyMembers = associationAttr.ThisKeyMembers.ToList<string>();
             }
+            /// <summary>
+            /// To the json value.
+            /// </summary>
+            /// <returns></returns>
             public JToken ToJsonValue()
             {
                 JObject jsonObject = new JObject();
@@ -264,26 +380,54 @@ namespace UpshotHelper
         public class TypePropertyValidationRuleMetadata
         {
             private string type;
+            /// <summary>
+            /// Gets the name.
+            /// </summary>
+            /// <value>
+            /// The name.
+            /// </value>
             public string Name
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the value1.
+            /// </summary>
+            /// <value>
+            /// The value1.
+            /// </value>
             public object Value1
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the value2.
+            /// </summary>
+            /// <value>
+            /// The value2.
+            /// </value>
             public object Value2
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Gets the error message string.
+            /// </summary>
+            /// <value>
+            /// The error message string.
+            /// </value>
             public string ErrorMessageString
             {
                 get;
                 private set;
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyValidationRuleMetadata" /> class.
+            /// </summary>
+            /// <param name="attribute">The attribute.</param>
             public TypePropertyValidationRuleMetadata(RequiredAttribute attribute)
                 //: this(attribute)
             {
@@ -291,6 +435,10 @@ namespace UpshotHelper
                 this.Value1 = true;
                 this.type = "boolean";
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyValidationRuleMetadata" /> class.
+            /// </summary>
+            /// <param name="attribute">The attribute.</param>
             public TypePropertyValidationRuleMetadata(RangeAttribute attribute)
                 //: this(attribute)
             {
@@ -299,6 +447,10 @@ namespace UpshotHelper
                 this.Value2 = attribute.Maximum;
                 this.type = "array";
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyValidationRuleMetadata" /> class.
+            /// </summary>
+            /// <param name="attribute">The attribute.</param>
             public TypePropertyValidationRuleMetadata(StringLengthAttribute attribute)
                 //: this(attribute)
             {
@@ -314,6 +466,10 @@ namespace UpshotHelper
                 this.Value1 = attribute.MaximumLength;
                 this.type = "number";
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyValidationRuleMetadata" /> class.
+            /// </summary>
+            /// <param name="attribute">The attribute.</param>
             public TypePropertyValidationRuleMetadata(DataTypeAttribute attribute)
                 //: this(attribute)
             {
@@ -329,6 +485,10 @@ namespace UpshotHelper
                 this.Value1 = true;
                 this.type = "boolean";
             }
+            /// <summary>
+            /// Initializes a new instance of the <see cref="TypePropertyValidationRuleMetadata" /> class.
+            /// </summary>
+            /// <param name="attribute">The attribute.</param>
             public TypePropertyValidationRuleMetadata(ValidationAttribute attribute)
             {
                 if (attribute.ErrorMessage != null)
@@ -336,6 +496,11 @@ namespace UpshotHelper
                     this.ErrorMessageString = attribute.ErrorMessage;
                 }
             }
+            /// <summary>
+            /// To the json value.
+            /// </summary>
+            /// <returns></returns>
+            /// <exception cref="System.InvalidOperationException"></exception>
             public JToken ToJsonValue()
             {
                 if (this.type == "array")
@@ -377,11 +542,22 @@ namespace UpshotHelper
         }
         //private static readonly ConcurrentDictionary<DataControllerDescription, IEnumerable<MetadataGenerator.TypeMetadata>> _metadataMap = new ConcurrentDictionary<DataControllerDescription, IEnumerable<MetadataGenerator.TypeMetadata>>();
         //private static IEnumerable<KeyValuePair<string, JToken>> emptyKeyValuePairEnumerable = Enumerable.Empty<KeyValuePair<string, JToken>>();
+        /// <summary>
+        /// Gets the empty key value pair enumerable.
+        /// </summary>
+        /// <value>
+        /// The empty key value pair enumerable.
+        /// </value>
         private static JToken emptyKeyValuePairEnumerable { get { return new JValue(string.Empty); } }
         //public static IEnumerable<MetadataGenerator.TypeMetadata> GetMetadata(DataControllerDescription description)
         //{
         //    return MetadataGenerator._metadataMap.GetOrAdd(description, (DataControllerDescription desc) => MetadataGenerator.GenerateMetadata(desc));
         //}
+        /// <summary>
+        /// Gets the metadata.
+        /// </summary>
+        /// <param name="entityType">Type of the entity.</param>
+        /// <returns></returns>
         public static MetadataGenerator.TypeMetadata GetMetadata(Type entityType)
         {
             return new MetadataGenerator.TypeMetadata(entityType);
@@ -395,6 +571,12 @@ namespace UpshotHelper
         //    }
         //    return list;
         //}
+        /// <summary>
+        /// Encodes the name of the type.
+        /// </summary>
+        /// <param name="typeName">Name of the type.</param>
+        /// <param name="typeNamespace">The type namespace.</param>
+        /// <returns></returns>
         private static string EncodeTypeName(string typeName, string typeNamespace)
         {
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", new object[]

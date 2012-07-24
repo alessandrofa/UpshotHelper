@@ -10,6 +10,11 @@ namespace UpshotHelper
 {
     internal static class TypeUtility
     {
+        /// <summary>
+        /// Gets the type of the element.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public static Type GetElementType(Type type)
         {
             if (type.HasElementType)
@@ -23,6 +28,11 @@ namespace UpshotHelper
             }
             return type;
         }
+        /// <summary>
+        /// Finds the I enumerable.
+        /// </summary>
+        /// <param name="seqType">Type of the seq.</param>
+        /// <returns></returns>
         internal static Type FindIEnumerable(Type seqType)
         {
             if (seqType == null || seqType == typeof(string))
@@ -74,6 +84,13 @@ namespace UpshotHelper
             }
             return null;
         }
+        /// <summary>
+        /// Determines whether [is data member] [the specified pd].
+        /// </summary>
+        /// <param name="pd">The pd.</param>
+        /// <returns>
+        ///   <c>true</c> if [is data member] [the specified pd]; otherwise, <c>false</c>.
+        /// </returns>
         internal static bool IsDataMember(PropertyDescriptor pd)
         {
             AttributeCollection attributeCollection = pd.ComponentType.Attributes();
@@ -93,6 +110,12 @@ namespace UpshotHelper
             }
             return true;
         }
+        /// <summary>
+        /// Gets the known types.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="inherit">if set to <c>true</c> [inherit].</param>
+        /// <returns></returns>
         internal static IEnumerable<Type> GetKnownTypes(Type type, bool inherit)
         {
             IDictionary<Type, Type> dictionary = new Dictionary<Type, Type>();
@@ -124,6 +147,11 @@ namespace UpshotHelper
             }
             return dictionary.Keys;
         }
+        /// <summary>
+        /// Unwraps the type of the task inner.
+        /// </summary>
+        /// <param name="t">The t.</param>
+        /// <returns></returns>
         internal static Type UnwrapTaskInnerType(Type t)
         {
             if (typeof(Task).IsAssignableFrom(t) && t.IsGenericType)
