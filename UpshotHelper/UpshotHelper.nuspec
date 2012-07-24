@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>$version$</version>
+    <version>1.0.0</version>
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
@@ -14,6 +14,20 @@
     <releaseNotes>Initial release.</releaseNotes>
     <copyright>Copyright 2012</copyright>
     <tags>Upshot SinglePageApplication</tags>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.ComponentModel.DataAnnotations" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Runtime.Serialization" targetFramework="net45" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net45" />
+    </frameworkAssemblies>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Microsoft.AspNet.Mvc" version="4.0.20505.0" />
+        <dependency id="Microsoft.AspNet.WebApi.Core" version="4.0.20505.0" />
+        <dependency id="Newtonsoft.Json" version="4.5.7" />
+      </group>
+    </dependencies>
   </metadata>
   <files>
     <file src="Web.config.transform"  target="Content\Views" />
