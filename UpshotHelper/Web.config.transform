@@ -2,7 +2,7 @@
   <system.web.webPages.razor>
     <pages pageBaseType="System.Web.Mvc.WebViewPage">
       <namespaces>
-        <add namespace="UpshotHelper"/>
+        <add namespace="UpshotHelper.Helpers"/>
       </namespaces>
     </pages>
   </system.web.webPages.razor>

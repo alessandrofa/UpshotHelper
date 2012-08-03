@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace UpshotHelper
+namespace UpshotHelper.Helpers
 {
     internal static class TypeDescriptorExtensions
     {

@@ -32,16 +32,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.7\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20505.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Net.Http.2.0.20505.0\lib\net40\System.Net.Http.WebRequest.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20505.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20505.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -49,13 +67,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MetadataExtensions.cs" />
-    <Compile Include="MetadataGenerator.cs" />
-    <Compile Include="TypeDescriptorExtensions.cs" />
+    <Compile Include="Controllers\ChangeSetEntryHttpParameterDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\SubmitActionDescriptor.cs" />
+    <Compile Include="Controllers\UpshotController.cs" />
+    <Compile Include="Controllers\UpshotControllerActionInvoker.cs" />
+    <Compile Include="Controllers\UpshotControllerActionSelector.cs" />
+    <Compile Include="Helpers\TypeDescriptorExtensions.cs" />
+    <Compile Include="Models\ChangeOperation.cs" />
+    <Compile Include="Models\ChangeSetEntry.cs" />
+    <Compile Include="Helpers\MetadataExtensions.cs" />
+    <Compile Include="Helpers\MetadataGenerator.cs" />
+    <Compile Include="Resources\Resource.Designer.cs">
+      <DependentUpon>Resource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Include="TypeUtility.cs" />
-    <Compile Include="UpshotConfigBuilder.cs" />
-    <Compile Include="UpshotExtensions.cs" />
+    <Compile Include="Helpers\UpshotConfigBuilder.cs" />
+    <Compile Include="Helpers\UpshotExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\ValidationResultInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -65,6 +98,13 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.config.transform" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

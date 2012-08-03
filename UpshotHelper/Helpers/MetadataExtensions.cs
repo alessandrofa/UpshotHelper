@@ -2,7 +2,7 @@
 using System.Web.Mvc;
 using Newtonsoft.Json.Linq;
 
-namespace UpshotHelper
+namespace UpshotHelper.Helpers
 {
     public static class MetadataExtensions
     {

@@ -6,7 +6,7 @@ using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 
-namespace UpshotHelper
+namespace UpshotHelper.Helpers
 {
     internal static class MetadataGenerator
     {

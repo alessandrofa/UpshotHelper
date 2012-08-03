@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-namespace UpshotHelper
+namespace UpshotHelper.Helpers
 {
     public static class UpshotExtensions
     {

@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 
-namespace UpshotHelper
+namespace UpshotHelper.Helpers
 {
     public class UpshotConfigBuilder : IHtmlString
     {
@@ -307,7 +307,7 @@ namespace UpshotHelper
         /// <param name="queryOperation">The query operation.</param>
         /// <param name="entityType">Type of the entity.</param>
         /// <returns>Returns an instance of <seealso cref="UpshotConfigBuilder"/> configured for a DataSource.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Following established design pattern for HTML helpers.")]
+        //[SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Following established design pattern for HTML helpers.")]
         public UpshotConfigBuilder DataSource<TApiController>(Expression<Func<TApiController, object>> queryOperation, Type entityType) where TApiController : ApiController
         {
             return this.DataSource<TApiController>(queryOperation, entityType, null, null);
@@ -323,7 +323,7 @@ namespace UpshotHelper
         /// <param name="clientName">Name of the client.</param>
         /// <returns>Returns an instance of <seealso cref="UpshotConfigBuilder"/> configured for a DataSource.</returns>
         /// <exception cref="System.ArgumentException"></exception>
-        [SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#", Justification = "Following established design pattern for HTML helpers."), SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Following established design pattern for HTML helpers.")]
+        //[SuppressMessage("Microsoft.Design", "CA1054:UriParametersShouldNotBeStrings", MessageId = "1#", Justification = "Following established design pattern for HTML helpers."), SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Following established design pattern for HTML helpers.")]
         public UpshotConfigBuilder DataSource<TApiController>(Expression<Func<TApiController, object>> queryOperation, Type entityType, string serviceUrl, string clientName) where TApiController : ApiController
         {
             UpshotConfigBuilder.IDataSourceConfig dataSourceConfig = new UpshotConfigBuilder.DataSourceConfig<TApiController>(this.htmlHelper, this.bufferChanges, queryOperation, entityType, serviceUrl, clientName);
@@ -346,7 +346,7 @@ namespace UpshotHelper
         /// <param name="clientConstructor">The client constructor.</param>
         /// <returns>Returns an instance of <seealso cref="UpshotConfigBuilder"/> configured for ClientMapping.</returns>
         /// <exception cref="System.ArgumentException"></exception>
-        [SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Following established design pattern for HTML helpers.")]
+        //[SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "Following established design pattern for HTML helpers.")]
         public UpshotConfigBuilder ClientMapping<TEntity>(string clientConstructor)
         {
             if (string.IsNullOrEmpty(clientConstructor))
