@@ -5,14 +5,19 @@ using System.Web.Http.ModelBinding;
 using UpshotHelper.Models;
 using System.Linq;
 using System.Web.Http.Controllers;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace UpshotHelper.Controllers
 {
-    [HttpControllerConfiguration(HttpActionInvoker = typeof(UpshotControllerActionInvoker), HttpActionSelector = typeof(UpshotControllerActionSelector))]
     public abstract class UpshotController : ApiController
     {
+        private UpshotControllerDescription _description;
+        private ChangeSet _changeSet;
+
         protected override void Initialize(HttpControllerContext controllerContext)
         {
+            _description = new UpshotControllerDescription(controllerContext.ControllerDescriptor);
             base.Initialize(controllerContext);
         }
 
@@ -23,9 +28,11 @@ namespace UpshotHelper.Controllers
                 throw new ArgumentNullException("changeSetEntries");
             }
 
-            return ProcessSubmit(changeSet);
+            _changeSet = new ChangeSet(changeSet, _description.EntityTypes);
+
+            return ProcessSubmit(_changeSet);
         }
 
-        protected abstract bool ProcessSubmit(IEnumerable<ChangeSetEntry> changeSet);
+        protected abstract bool ProcessSubmit(ChangeSet changeSet);
     }
 }

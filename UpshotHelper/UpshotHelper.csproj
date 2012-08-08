@@ -67,15 +67,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ChangeSetEntryHttpParameterDescriptor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Controllers\SubmitActionDescriptor.cs" />
     <Compile Include="Controllers\UpshotController.cs" />
-    <Compile Include="Controllers\UpshotControllerActionInvoker.cs" />
-    <Compile Include="Controllers\UpshotControllerActionSelector.cs" />
+    <Compile Include="Controllers\UpshotControllerDescription.cs" />
     <Compile Include="Helpers\TypeDescriptorExtensions.cs" />
     <Compile Include="Models\ChangeOperation.cs" />
+    <Compile Include="Models\ChangeSet.cs" />
     <Compile Include="Models\ChangeSetEntry.cs" />
     <Compile Include="Helpers\MetadataExtensions.cs" />
     <Compile Include="Helpers\MetadataGenerator.cs" />
@@ -97,7 +93,6 @@
     <None Include="UpshotHelper.nuspec">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Web.config.transform" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

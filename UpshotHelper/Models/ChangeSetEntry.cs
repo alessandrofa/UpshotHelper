@@ -7,6 +7,7 @@ namespace UpshotHelper.Models
 {
     /// <summary> Represents a change operation to be performed on an entity. </summary>
     [DebuggerDisplay("Operation = {Operation}, Type = {Entity.GetType().Name}"), DataContract]
+    //[Newtonsoft.Json.JsonObject]
     public sealed class ChangeSetEntry
     {
         /// <summary> Gets or sets the client ID for the entity </summary>
@@ -58,6 +59,5 @@ namespace UpshotHelper.Models
                 return this.HasConflict || (this.ValidationErrors != null && this.ValidationErrors.Any<ValidationResultInfo>());
             }
         }
-        //internal UpshotHelper.Controllers.UpdateActionDescriptor ActionDescriptor { get; set; }
     }
 }
